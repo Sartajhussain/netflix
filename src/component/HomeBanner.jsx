@@ -12,7 +12,7 @@ function HomeBanner() {
             <div className="absolute top-[-100px] inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90"></div>
             <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-4 text-center">
                 <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                    Unlimited movies, <br />TV shows, and more
+                    Unlimited movies, <br />TV shows, and more updated
                 </h1>
                 <p className="text-lg md:text-xl mb-6">Starts at ₹149. Cancel at any time.</p>
                 <p className="text-lg md:text-xl mb-6 font-semibold">Ready to watch? Enter your email to create or restart your membership.
