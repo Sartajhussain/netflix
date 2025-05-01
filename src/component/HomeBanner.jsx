@@ -15,7 +15,7 @@ function HomeBanner() {
                     Unlimited movies, <br />TV shows, and more.
                 </h1>
                 <p className="text-lg md:text-xl mb-6">Starts at ₹149. Cancel at any time.</p>
-                <p className="text-lg md:text-xl mb-6 font-semibold">Ready to watch? Enter your email to create or restart your membership.
+                <p className="text-lg md:text-xl mb-6 font-semibold"> sartaj Ready to watch? Enter your email to create or restart your membership.
                 </p>
 
                 <div className="w-full max-w-xl flex flex-col md:flex-row items-center gap-4">
