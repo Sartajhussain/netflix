@@ -10,26 +10,29 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+
 function Login() {
     const navigate = useNavigate();
     const location = useLocation();
     const page = location.pathname === '/login' ? true : false;
+
 
     // Form ke state variables
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isEmailUsed, setIsEmailuUsed] = useState(false);
-    
+
 
     const handleLogin = (e) => {
-        
+
         e.preventDefault();
 
         if (page) {
             // Login kar rahe hain
             signInWithEmailAndPassword(auth, email, password)
                 .then((auth) => {
+                    
                     navigate("/dashboard");
                 })
                 .catch((err) => {
@@ -39,6 +42,7 @@ function Login() {
         } else {
             // Register kar rahe hain
             createUserWithEmailAndPassword(auth, email, password)
+            console.log(auth)
                 .then(auth => {
                     navigate('/dashboard');
                 })
@@ -57,8 +61,8 @@ function Login() {
     };
 
     return (
-        <>   
-        <Header/>
+        <>
+            <Header />
             <div className="relative w-full h-screen overflow-hidden">
                 <img
                     src={banner}
@@ -115,7 +119,7 @@ function Login() {
                             {isEmailUsed ? (
                                 <span className="text-red-500">Already used in </span>
                             ) : (
-                                "sign in "
+                                ""
                             )}
                             <Link to={page ? "/register" : "/login"} className="text-white hover:underline">
                                 {page ? "Sign up now " : "Sign in "}
