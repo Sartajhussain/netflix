@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import banner from '../assets/bg-banner.jpg';
 import Header from './Header';
 import { initializeApp } from 'firebase/app';
@@ -6,33 +6,30 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } f
 import { firebaseConfig } from './firebaseConfig.js';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-// Firebase app initialize kar rahe hain
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-
-function Login() {
+function Login({ page }) {
     const navigate = useNavigate();
-    const location = useLocation();
-    const page = location.pathname === '/login' ? true : false;
 
-
-    // Form ke state variables
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isEmailUsed, setIsEmailuUsed] = useState(false);
 
+    // Clear errors when switching between login/register
+    useEffect(() => {
+        setError('');
+        setIsEmailuUsed(false);
+    }, [page]);
 
     const handleLogin = (e) => {
-
         e.preventDefault();
 
         if (page) {
-            // Login kar rahe hain
+            // Login
             signInWithEmailAndPassword(auth, email, password)
-                .then((auth) => {
-                    
+                .then(() => {
                     navigate("/dashboard");
                 })
                 .catch((err) => {
@@ -40,10 +37,9 @@ function Login() {
                     setError('Invalid email or password');
                 });
         } else {
-            // Register kar rahe hain
+            // Register
             createUserWithEmailAndPassword(auth, email, password)
-            console.log(auth)
-                .then(auth => {
+                .then(() => {
                     navigate('/dashboard');
                 })
                 .catch((err) => {
@@ -74,7 +70,6 @@ function Login() {
                     <div className="bg-black bg-opacity-80 text-white p-8 rounded-md w-full max-w-md">
                         <h2 className="text-3xl font-bold mb-6">{page ? "Sign in" : "Register"}</h2>
 
-                        {/* Error agar hai to red color me show karo */}
                         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
                         <form onSubmit={handleLogin} className="flex flex-col gap-4">
@@ -101,7 +96,6 @@ function Login() {
                                 {page ? "Sign in" : "Register"}
                             </button>
 
-                            {/* Login page ke liye extra options */}
                             {page && (
                                 <div className="flex justify-between items-center text-sm text-gray-400 mt-2">
                                     <label className="flex items-center gap-2">
@@ -113,16 +107,13 @@ function Login() {
                             )}
                         </form>
 
-                        {/* Sign in / Sign up toggle with red message if email already used */}
                         <div className="mt-6 text-sm text-gray-400">
                             {page ? "New to Netflix? " : "Existing user "}
-                            {isEmailUsed ? (
+                            {isEmailUsed && (
                                 <span className="text-red-500">Already used in </span>
-                            ) : (
-                                ""
                             )}
                             <Link to={page ? "/register" : "/login"} className="text-white hover:underline">
-                                {page ? "Sign up now " : "Sign in "}
+                                {page ? "Register now" : "Sign in"}
                             </Link>.
                         </div>
                     </div>
